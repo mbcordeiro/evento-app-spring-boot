@@ -3,7 +3,7 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 	<title>EventosApp</title>
-	<!--Import Google Icon Font-->
+	 <!--Import Google Icon Font-->
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
@@ -13,41 +13,44 @@
       <link rel="stylesheet" href="style/styleCss.css"/>
 </head>
 <body>
-
+	
 	<header>
 		<nav class="menu">
 		    <div class="nav-wrapper">
-		      <a href="#" class="brand-logo">Cadastro de Eventos:</a>
+		      <a href="#" class="brand-logo">Lista de Eventos</a>
 		      <ul id="nav-mobile" class="right hide-on-med-and-down">
-		        <li><a href="/eventos" class="waves-effect waves-light btn"><i class="material-icons left">format_list_bulleted</i>Lista de Eventos</a></li>
+		        <li><a href="/cadastrarEvento" class="waves-effect waves-light btn"><i class="material-icons left">add_circle_outline</i>Cadastrar evento</a></li>
 		      </ul>
 		    </div>
 		</nav>
 	
 	</header>
-		
-	<th:block th:include="mensagemValidacao"></th:block>
-	<div class="container formEvento">
+	<table class="container">
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th>Local</th>
+				<th>Data</th>
+				<th>Horario</th>
+				<th>Deletar</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="evento : ${eventos}">
+				<td><a th:href="${(#mvc.url('EC#detalhesEvento').arg(0, evento.codigo)).build()}"><span th:text="${evento.nome}"></span></a></td>
+				<td><span th:text="${evento.local}"></span></td>
+				<td><span th:text="${evento.data}"></span></td>
+				<td><span th:text="${evento.horario}"></span></td>
+				<td><a class="waves-effect waves-light btn-small" th:href="${(#mvc.url('EC#deletarEvento').arg(0, evento.codigo)).build()}"><i class="material-icons left">delete</i></a></td>
+			</tr>
+		</tbody>
 	
-	<form class="container" method="post">
-		Nome: <input type="text" value="" name="nome"/>
-		<div class="row">
-			<div class="input-field col s6">
-				Local: <input type="text" value="" name="local"/>
-			</div>
-			<div class="input-field col s3">
-				Data: <input type="date" value="" name="data"/>
-			</div>
-			<div class="input-field col s3">
-				Horario: <input type="time" value="" name="horario"/>
-			</div>
-		</div>
-		<button class="waves-effect waves-light btn" type="submit">Salvar</button>
-	
-	</form>
-	</div>
+	</table>
+
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+
 </body>
+
 
 </html>
